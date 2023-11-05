@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="../static/registrace.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div id="container">
+    <h2>Formulář k registraci</h2>
+    <form id="registration-form" action="/submit-registration" method="post">
+        <div class="form-group">
+            <label for="nick">Prezdivka:</label>
+            <input type="text" id="nick" name="nick" required pattern="[A-Za-z0-9]{2,20}">
+            <span id="nickname-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="je_plavec">Umiš plavat?</label>
+            <select id="je_plavec" name="je_plavec" required>
+                <option value="1">Ano</option>
+                <option value="0">Ne</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="kanoe_kamarad">S kým chceš jet?</label>
+            <input type="text" id="kanoe_kamarad" name="kanoe_kamarad">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Poslat" id="register-button" class="btn">
+            <button onclick="window.location.href='/';" type="button" class="btn">Zrušit</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#nick").on('input', function () {
+            var nickname = $(this).val();
+            $.get("/api/check-nickname?nick=" + nickname, function (data) {
+                if (data.is_taken) {
+                    $("#nickname-error").text("Prezdivka je jiz zabrana");
+                    $("#nickname-error").css("color", "red");
+                    $("#register-button").prop("disabled", true);
+                } else {
+                    $("#nickname-error").text("");
+                    $("#register-button").prop("disabled", false);
+                }
+            });
+        });
+
+        $("#registration-form").submit(function (event) {
+            var canSwim = $("#je_plavec").val();
+            if (canSwim !== "1") {
+                alert("Musis umet plavat, blbecku");
+                event.preventDefault();
+            }
+
+            var hasBuddy = $("#kanoe_kamarad").val();
+            if (hasBuddy === "") {
+                $("#kanoe_kamarad").val("has no friend (lol)");
+
+
+                var $otherUsers = $("input[name='kanoe_kamarad'][value='has no friend (lol)']").not(this);
+
+                if ($otherUsers.length > 0) {
+                    var matchedUser = $otherUsers.first();
+                    alert("Byl si prirazen ke dalsimu ucastnikovy, ktery taky nema zadne kamarady! (lol)");
+                    matchedUser.val("matched");
+                    event.preventDefault(); //
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

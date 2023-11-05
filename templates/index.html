@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <a href="/registrace">Registrovat se</a>
+
+    <h2>Seznam registrovaných osob</h2>
+    <ul>
+        {% for ucastnik in ucastnici %}
+        <li>
+            <strong>{{ ucastnik.nick }}</strong> (Plavec: {{ "Ano" if ucastnik.je_plavec == '1' else "Ne" }})
+            {% if ucastnik.kanoe_kamarad %}
+                - Kámoš na kanoe: {{ ucastnik.kanoe_kamarad }}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

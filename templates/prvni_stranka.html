@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="../static/prvni_stranka.css"/>
+</head>
+<body>
+<div id="container">
+    <h2>Registrovaní Účastníci</h2>
+    <ul class="user-list">
+        {% for participant in participants %}
+        <li class="user-item">
+            <strong>Prezdivka:</strong> {{ participant['nick'] }}
+            <br>
+            <strong>Plavec:</strong> {{ "Ano" if participant['je_plavec'] == 1 else "Ne" }}
+            {% if participant['kanoe_kamarad'] %}
+            <br>
+            <strong>Kamarád:</strong> {{ participant['kanoe_kamarad'] }}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <a href="/registrace" class="btn">Registrovat</a>
+</div>
+</body>
+</html>

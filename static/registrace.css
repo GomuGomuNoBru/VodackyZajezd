@@ -1,0 +1,86 @@
+/* Reset some default styles */
+body, h2, form, label, input, select, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h2 {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+#container {
+    background-color: lightgray;
+    padding: 20px;
+    margin: 10%;
+    position: relative;
+    z-index: 1;
+    border: 5px solid black;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center; /* Center-align the text within the input */
+}
+
+
+select {
+    height: 40px;
+}
+
+.btn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 3px;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.btn:hover {
+    background-color: #555;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #8B00FF, #FF00FF);
+    background-size: 600% 100%;
+    animation: rainbowBackground 5s linear infinite;
+    z-index: 0; /* Set the background behind the container */
+}
+
+@keyframes rainbowBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
