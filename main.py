@@ -6,13 +6,13 @@ app = Flask(__name__, static_url_path='/static', static_folder='static', templat
 registered_participants = []
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])  #Hlavni stranka
 def index():
     return render_template('prvni_stranka.html', title="Rozsazení v lodích na vodáckém kurzu 2023 SPŠE Ječná",
                            participants=registered_participants), 200
 
 
-@app.route('/registrace', methods=['GET', 'POST'])
+@app.route('/registrace', methods=['GET', 'POST']) #Registracni stranka
 def druha_stranka():
     return render_template('registrace.html', title='Registrace'), 200
 
@@ -27,15 +27,14 @@ def check_nickname():
 
     return jsonify({'is_taken': is_taken})
 
-
+# Funkce na spojeni lidi bez kamaradu
 def find_and_match_participants(participants):
     match_count = 0
 
     for participant in participants:
         if participant['kanoe_kamarad'] == "has no friend (lol)":
             for potential_match in participants:
-                if potential_match['kanoe_kamarad'] == "has no friend (lol)" and potential_match['nick'] != participant[
-                    'nick']:
+                if potential_match['kanoe_kamarad'] == "has no friend (lol)" and potential_match['nick'] != participant['nick']:
                     participant['kanoe_kamarad'] = potential_match['nick']
                     potential_match['kanoe_kamarad'] = participant['nick']
                     match_count += 1
